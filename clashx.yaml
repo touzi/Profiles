@@ -7,14 +7,17 @@ external-controller: 127.0.0.1:9090
 experimental:
   ignore-resolve-fail: true
 Proxy:
-  - name: hk0http
-    type: http
-    server: hk0.go.com
-    port: 3389
-    password: 7788
-    username: gogogo
-    tls: true
-    skip-cert-verify: false
+  - name: 台湾标准 BGP 03
+    type: ss
+    server: ss.bgp.com
+    port: 252
+    cipher: aes-128-gcm
+    password: abcdefg
+    udp: true
+    plugin: obfs
+    plugin-opts:
+        mode: tls
+        host: so.com
   - name: us0vmess
     type: vmess
     server: us0.go.com
@@ -33,13 +36,15 @@ Proxy Group:
   - name: Auto
     type: url-test
     proxies:
-      - hk0http
+      - 台湾标准 BGP 03
       - us0vmess
+    url: http://cp.cloudflare.com/generate_204
+    interval: "1800"
   - name: Proxy
     type: select
     proxies:
       - Auto
-      - hk0http
+      - 台湾标准 BGP 03
       - us0vmess
 Rule:
   - DOMAIN-SUFFIX,ads.youtube.com,REJECT
